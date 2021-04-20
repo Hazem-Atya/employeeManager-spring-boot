@@ -1,8 +1,14 @@
 package org.hazem.employeemanager;
 
+
+import io.r2dbc.spi.ConnectionFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.data.r2dbc.config.AbstractR2dbcConfiguration;
+import org.springframework.r2dbc.connection.init.ConnectionFactoryInitializer;
+import org.springframework.r2dbc.connection.init.ResourceDatabasePopulator;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
@@ -15,7 +21,28 @@ public class EmployeemanagerApplication {
     public static void main(String[] args) {
         SpringApplication.run(EmployeemanagerApplication.class, args);
     }
+    @Bean
+    ConnectionFactoryInitializer initializer(ConnectionFactory connectionFactory) {
 
+        ConnectionFactoryInitializer initializer = new ConnectionFactoryInitializer();
+        initializer.setConnectionFactory(connectionFactory);
+        initializer.setDatabasePopulator(new ResourceDatabasePopulator(new ClassPathResource("schema.sql")));
+
+        return initializer;
+    }
+   /* @Bean
+    public ConnectionFactory connectionFactory() {
+        return new MySqlConnectionFactory(
+                MySqlConnectionConfiguration.builder()
+                        .host("localhost")
+                        .port(5432)
+                        .username("postgres")
+                        .password("mysecretpassword")
+                        .database("myDatabase")
+                        .build());
+    }
+}*/
+/*
     @Bean
     public CorsFilter corsFilter() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
@@ -30,5 +57,5 @@ public class EmployeemanagerApplication {
         UrlBasedCorsConfigurationSource urlBasedCorsConfigurationSource = new UrlBasedCorsConfigurationSource();
         urlBasedCorsConfigurationSource.registerCorsConfiguration("/**", corsConfiguration);
         return new CorsFilter(urlBasedCorsConfigurationSource);
-    }
+    }*/
 }

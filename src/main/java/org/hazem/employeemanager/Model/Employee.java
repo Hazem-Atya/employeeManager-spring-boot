@@ -1,28 +1,31 @@
 package org.hazem.employeemanager.Model;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import org.springframework.data.annotation.*;
+import org.springframework.data.relational.core.mapping.Table;
 
-import javax.persistence.*;
 import java.io.Serializable;
 
-@Entity
+/*@Entity*/
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Table("employee")
 public class Employee implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false, updatable = false)
     private long id;
     private String name;
     private String email;
     private String jobTitle;
     private String phone;
     private String imageUrl;
+/*
     @Column(nullable = false, updatable = false)
+*/
     private String employeeCode;
 
-    public static void main(String [] args){
+    public static void main(String[] args) {
 
         Employee e = new Employee();
         e.setEmployeeCode("hah");

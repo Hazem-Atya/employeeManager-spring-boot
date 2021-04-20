@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.util.List;
 
@@ -22,14 +24,14 @@ public class EmployeeResource {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<Employee>> getAllEmployee() {
-        List<Employee> employees = employeeService.findAllEmployees();
-        return new ResponseEntity<>(employees, HttpStatus.OK);
+
+    public Flux<Employee> getAllEmployee() {
+         return employeeService.findAllEmployees();
     }
 
-    @GetMapping("/find/{id}")
+  /*  @GetMapping("/find/{id}")
     public ResponseEntity<Employee> getEmployeeById(@PathVariable("id") Long id) {
-        Employee employee = employeeService.findEmployeeById(id);
+        Mono<Employee> employee = employeeService.findEmployeeById(id);
         return new ResponseEntity<>(employee, HttpStatus.OK);
     }
 
@@ -43,7 +45,7 @@ public class EmployeeResource {
         Employee updateEmployee = employeeService.addEmployee(employee);
         return new ResponseEntity<>(updateEmployee, HttpStatus.OK);
     }
-    /*@Transactional*/
+    *//*@Transactional*//*
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?>  deleteEmployee(@PathVariable("id") Long id) {
         employeeService.deleteEmployee(id);
@@ -51,6 +53,6 @@ public class EmployeeResource {
         return new ResponseEntity<>(HttpStatus.OK);
 
     }
-
+*/
 
 }

@@ -1,15 +1,20 @@
 package org.hazem.employeemanager.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.hazem.employeemanager.Model.Employee;
 import org.hazem.employeemanager.exception.UserNotFoundException;
 import org.hazem.employeemanager.repo.EmployeeRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 
-import java.util.List;
 import java.util.UUID;
 
+/*
+@Slf4j
+*/
 @Service
 public class EmployeeService {
     private final EmployeeRepo employeeRepo;
@@ -19,20 +24,20 @@ public class EmployeeService {
         this.employeeRepo = employeeRepo;
     }
 
-    public Employee addEmployee(Employee employee) {
+/*    public Mono<Employee> addEmployee(Employee employee) {
         employee.setEmployeeCode(UUID.randomUUID().toString());
         return employeeRepo.save(employee);
-    }
+    }*/
 
-    public List<Employee> findAllEmployees() {
+    public Flux<Employee> findAllEmployees() {
         return employeeRepo.findAll();
     }
 
-    public Employee updateEmployee(Employee employee) {
+    public Mono<Employee> updateEmployee(Employee employee) {
         return employeeRepo.save(employee);
     }
-
-    public Employee findEmployeeById(Long id) {
+/*
+    public Mono<Employee> findEmployeeById(Long id) {
         return employeeRepo.findEmployeeById(id).orElseThrow(() -> new UserNotFoundException("User by Id " + id + " was not found"));
     }
 
@@ -40,4 +45,9 @@ public class EmployeeService {
         employeeRepo.deleteById(id);
     }
 
+    public Mono<Employee> deleteUser(Long id) {
+        return employeeRepo.findById(id)
+                .flatMap(existingEmployee -> employeeRepo.delete(existingEmployee)
+                        .then(Mono.just(existingEmployee)));
+    }*/
 }
