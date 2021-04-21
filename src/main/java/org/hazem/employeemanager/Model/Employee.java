@@ -2,6 +2,7 @@ package org.hazem.employeemanager.Model;
 
 import lombok.*;
 import org.springframework.data.annotation.*;
+import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
 import java.io.Serializable;
@@ -11,14 +12,19 @@ import java.io.Serializable;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table("employee")
+@Table/*("employee")*/
 public class Employee implements Serializable {
     @Id
     private long id;
+    @Column
     private String name;
+    @Column
     private String email;
+    @Column
     private String jobTitle;
+    @Column
     private String phone;
+    @Column
     private String imageUrl;
 /*
     @Column(nullable = false, updatable = false)

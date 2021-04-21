@@ -1,4 +1,4 @@
-CREATE TABLE employee
+CREATE TABLE IF NOT EXISTS employee
 (
     id        INTEGER PRIMARY KEY,
     name VARCHAR(50),
